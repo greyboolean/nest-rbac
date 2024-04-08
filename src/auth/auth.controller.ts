@@ -5,16 +5,18 @@ import {
   Body,
   HttpCode,
   HttpStatus,
-  UseGuards,
+  // UseGuards,
   Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from './guards/auth.guard';
+// import { AuthGuard } from './guards/auth.guard';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
+import { Public } from './decorators/public.decorator';
 
 @Controller('auth')
+@Public()
 @ApiTags('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -34,7 +36,7 @@ export class AuthController {
   }
 
   @Get('profile')
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   @ApiOkResponse({ type: Object })
   @ApiBearerAuth()
   getProfile(@Request() req) {

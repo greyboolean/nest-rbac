@@ -6,7 +6,7 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
+  // UseGuards,
   ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -19,14 +19,13 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
+// import { AuthGuard } from 'src/auth/guards/auth.guard';
 // import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from './enums/role.enum';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Controller('users')
-@UseGuards(AuthGuard, RolesGuard)
+// @UseGuards(AuthGuard, RolesGuard)
 @Roles(Role.Admin)
 @ApiTags('users')
 @ApiBearerAuth()
@@ -40,6 +39,7 @@ export class UsersController {
   }
 
   @Get()
+  @Roles(Role.Admin, Role.User)
   @ApiOkResponse({ type: User, isArray: true })
   findAll() {
     return this.usersService.findAll();
